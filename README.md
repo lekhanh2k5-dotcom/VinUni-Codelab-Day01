@@ -8,6 +8,8 @@
 ## 🛠️ 1. Khởi tạo Môi trường & Thiết lập API Keys
 
 ### 🔹 1.1 Khởi tạo môi trường ảo (venv) & Cài đặt thư viện
+Chạy các lệnh dưới đây từ thư mục `day01`.
+
 Để tránh xung đột thư viện giữa các dự án, bạn nên sử dụng môi trường ảo (`.venv`):
 
 1. **Khởi tạo Virtual Environment (`.venv`):**
@@ -30,7 +32,7 @@
      source .venv/bin/activate
      ```
 
-3. **Cài đặt thư viện từ [requirements.txt](file:///j:/VinUniCodelab/VinUni_Codelab_Day01/requirements.txt):**
+3. **Cài đặt thư viện từ [requirements.txt](requirements.txt):**
    ```bash
    pip install -r requirements.txt
    ```
@@ -80,7 +82,7 @@ Bạn có thể thiết lập biến môi trường trực tiếp từ terminal 
   ```
 
 > [!TIP]
-> Để tránh việc phải nhập lại lệnh thiết lập mỗi khi tắt terminal, bạn có thể tạo một file [.env](file:///j:/VinUniCodelab/VinUni_Codelab_Day01/.env) đặt ở thư mục gốc của project (sử dụng mẫu từ [.env.example](file:///j:/VinUniCodelab/VinUni_Codelab_Day01/.env.example)) và sử dụng thư viện `python-dotenv` để load tự động trong code.
+> Để tránh việc phải nhập lại lệnh thiết lập mỗi khi tắt terminal, bạn có thể sao chép [.env.example](.env.example) thành `.env` trong thư mục `day01`, điền API key của bạn và sử dụng thư viện `python-dotenv` để load tự động trong code. File mẫu có cả `ANTHROPIC_API_KEY` cho Task 3. Giữ file `.env` hiện có nếu bạn đã cấu hình key.
 
 ---
 
@@ -94,6 +96,24 @@ Bạn có thể thiết lập biến môi trường trực tiếp từ terminal 
     D --> E[Task 5: streaming_chatbot]
     E --> F[Bonus A: retry_with_backoff]
     F --> G[Bonus B/C: batch & table]
+
+### Chạy bài làm và kiểm tra
+
+File khởi đầu: [starter-code/template.py](starter-code/template.py). Lưu bài hoàn chỉnh tại [solution-code/solution.py](solution-code/solution.py); bộ test ưu tiên kiểm tra file này nếu có.
+
+Sau khi kích hoạt `.venv`, chạy từ thư mục `day01`:
+
+```bash
+python -m pytest tests/ -v
+```
+
+Các lệnh gọi API trong test được giả lập (mock), không cần API key. Để chạy bài làm với API thật, cấu hình `.env` rồi chạy:
+
+```bash
+python solution-code/solution.py
+```
+
+Chatbot mặc định dùng `gemini-3.8-flash`. Có thể chọn model khác bằng biến `GEMINI_CHAT_MODEL` trong `.env`. Các hàm so sánh vẫn giữ model và bảng giá theo đề bài; test dùng mock nên không xác nhận quyền truy cập model trên tài khoản thật.
 
 
 ---
@@ -186,4 +206,4 @@ Streaming giúp tạo trải nghiệm người dùng mượt mà giống như Ch
 * **Cách khắc phục:** Triển khai **Task Bonus A (`retry_with_backoff`)** để tự động thử lại sau vài giây!
 
 ---
-> **💡 Vibe Coding Tip:** Hãy tận dụng Cursor hoặc Copilot bằng cách cung cấp cho nó ngữ cảnh của file `student_guide.md` và `template.py` để viết code nháp nhanh chóng, sau đó kiểm tra và hoàn thiện bằng tay!
+> **💡 Vibe Coding Tip:** Hãy tận dụng Cursor hoặc Copilot bằng cách cung cấp cho nó ngữ cảnh của file `README.md` và `starter-code/template.py` để viết code nháp nhanh chóng, sau đó kiểm tra và hoàn thiện bằng tay!
