@@ -278,8 +278,28 @@ def retry_with_backoff(
 # Bonus Task B — Batch compare
 # ---------------------------------------------------------------------------
 def batch_compare(prompts: list[str]) -> list[dict]:
-    """Run compare_models on each prompt, adding the prompt to each result."""
-    return [{"prompt": prompt, **compare_models(prompt)} for prompt in prompts]
+    """Run compare_models on each prompt, adding the prompt to each result.
+
+    A failed prompt stays in the results with an 'Error: ...' response, so one
+    bad request does not lose the rest of the batch.
+    """
+    results = []
+    for prompt in prompts:
+        try:
+            comparison = compare_models(prompt)
+        except Exception as exc:
+            comparison = {
+                key: {
+                    "response": f"Error: {exc}",
+                    "latency": 0.0,
+                    "cost": 0.0,
+                    "input_tokens": 0,
+                    "output_tokens": 0,
+                }
+                for key in MODEL_LABELS
+            }
+        results.append({"prompt": prompt, **comparison})
+    return results
 
 
 # ---------------------------------------------------------------------------
